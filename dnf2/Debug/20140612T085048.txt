@@ -1,0 +1,17 @@
+17.46	==========================
+0	start update_player_map_pos
+2.709	start update_player_win_pos
+40.44	start update_target_group_map_pos
+2.975	start update_target_group_win_pos
+0.005	end update
+0.001	e
+0.294	attack_boss
+0.189	q
+0.497	left_hit
+51.07	attack_block
+20.48	pick_up
+1.061	check score
+1.54	handle npc
+1.352	handle safe mode
+0.044	handle block sign
+0.071	q_hit

@@ -1,0 +1,61 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: loginUser - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP29B.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"DeBug/" /Fp"DeBug/loginUser.pch" /Yu"stdafx.h" /Fo"DeBug/" /Fd"DeBug/" /FD /c 
+"D:\新例子\vc\用户模式\IPCFormDLG.cpp"
+"D:\新例子\vc\用户模式\KeyFormDLG.cpp"
+"D:\新例子\vc\用户模式\ksreglib.cpp"
+"D:\新例子\vc\用户模式\loginUser.cpp"
+"D:\新例子\vc\用户模式\loginUserDlg.cpp"
+"D:\新例子\vc\用户模式\TAB01DLG.cpp"
+"D:\新例子\vc\用户模式\TAB02DLG.cpp"
+"D:\新例子\vc\用户模式\TAB03DLG.cpp"
+"D:\新例子\vc\用户模式\YourFormDLG.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP29B.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP29C.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:no /pdb:"Release/loginUser.pdb" /machine:I386 /out:"Release/loginUser.exe" 
+".\DeBug\IPCFormDLG.obj"
+".\DeBug\KeyFormDLG.obj"
+".\DeBug\ksreglib.obj"
+".\DeBug\loginUser.obj"
+".\DeBug\loginUserDlg.obj"
+".\DeBug\New02Edit.obj"
+".\DeBug\NewEdit.obj"
+".\DeBug\StdAfx.obj"
+".\DeBug\TAB01DLG.obj"
+".\DeBug\TAB02DLG.obj"
+".\DeBug\TAB03DLG.obj"
+".\DeBug\YourFormDLG.obj"
+".\DeBug\loginUser.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP29C.tmp"
+<h3>Output Window</h3>
+Compiling...
+IPCFormDLG.cpp
+KeyFormDLG.cpp
+ksreglib.cpp
+loginUser.cpp
+loginUserDlg.cpp
+TAB01DLG.cpp
+TAB02DLG.cpp
+TAB03DLG.cpp
+YourFormDLG.cpp
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+loginUser.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

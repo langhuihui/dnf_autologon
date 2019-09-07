@@ -1,0 +1,353 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\loginUser.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\icon.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 loginUser"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "loginUser 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2012",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_LOGINUSER_DIALOG DIALOGEX 0, 0, 300, 147
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "用户模式登录 by V9"
+FONT 9, "宋体"
+BEGIN
+    CONTROL         "Tab1",IDC_TAB1,"SysTabControl32",0x0,2,3,293,140
+END
+
+IDD_TAB01 DIALOG DISCARDABLE  0, 0, 292, 140
+STYLE WS_CHILD
+FONT 9, "宋体"
+BEGIN
+    GROUPBOX        "",IDC_STATIC,7,0,271,72
+    GROUPBOX        "",IDC_STATIC,0,80,279,32
+    LTEXT           "用户帐号",IDC_STATIC,8,16,39,8
+    LTEXT           "通道号：",IDC_lblclientid,213,14,20,8
+    LTEXT           "登陆密码",IDC_STATIC,8,36,39,8
+    EDITTEXT        IDC_u11,48,12,160,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ks_clientid,233,11,36,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_p11,48,32,160,14,ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT        IDC_k11,8,92,200,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "登  陆",IDC_loginbtn,219,32,50,14
+    PUSHBUTTON      "解  绑",IDC_unbindButton1,219,54,50,14
+    PUSHBUTTON      "查  询",IDC_viewbtn,218,91,50,14
+    CONTROL         "记住密码",IDC_passCheck,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,48,56,46,10
+    CONTROL         "检查更新",IDC_Checkupdate,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,116,56,46,10
+END
+
+IDD_TAB02 DIALOG DISCARDABLE  0, 0, 294, 177
+STYLE WS_CHILD
+FONT 9, "宋体"
+BEGIN
+    CONTROL         "注册",IDC_Radio1reg,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,48,92,31,10
+    CONTROL         "充值",IDC_Radio2cz,"Button",BS_AUTORADIOBUTTON,92,92,31,
+                    10
+    GROUPBOX        "",IDC_STATIC,0,0,282,107
+    LTEXT           "用户帐号",IDC_STATIC,8,16,33,8
+    LTEXT           "注册卡号",IDC_STATIC,147,15,36,8
+    LTEXT           "登陆密码",IDC_STATIC,8,42,35,8
+    LTEXT           "安全密码",IDC_STATIC,147,43,33,8
+    LTEXT           "绑定信息",IDC_STATIC,8,70,33,8
+    LTEXT           "推广帐号",IDC_STATIC,147,67,34,8
+    PUSHBUTTON      "注册帐号",IDC_regorczbtn,219,88,50,14
+    EDITTEXT        IDC_u21,43,13,85,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_k21,185,12,85,14,ES_AUTOHSCROLL | ES_NOHIDESEL | NOT 
+                    WS_TABSTOP
+    EDITTEXT        IDC_p21,43,40,85,14,ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT        IDC_p22,185,42,85,14,ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT        IDC_bdinfo2,43,66,85,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_parentuser,185,64,85,14,ES_AUTOHSCROLL
+END
+
+IDD_TAB03 DIALOG DISCARDABLE  0, 0, 289, 175
+STYLE WS_CHILD
+FONT 9, "宋体"
+BEGIN
+    LTEXT           "用户帐号",IDC_STATIC,8,16,39,8
+    LTEXT           "安全密码",IDC_STATIC,8,40,39,8
+    LTEXT           "登陆密码",IDC_STATIC,8,64,39,8
+    LTEXT           "绑定信息",IDC_STATIC,8,88,39,8
+    LTEXT           "*验证安全密码",IDC_STATIC,208,43,60,8
+    LTEXT           "不修改请留空",IDC_STATIC,208,64,57,8
+    LTEXT           "不修改请留空",IDC_STATIC,208,89,56,8
+    PUSHBUTTON      "修改资料",IDC_editbtn,212,12,50,14
+    EDITTEXT        IDC_u31,48,12,148,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_p31,48,37,148,14,ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT        IDC_p32,48,62,148,14,ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT        IDC_bdinfo3,48,86,148,14,ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC,0,0,276,109
+END
+
+IDD_IPCForm DIALOG DISCARDABLE  0, 0, 187, 98
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "已登陆成功"
+FONT 9, "宋体"
+BEGIN
+    PUSHBUTTON      "做一些自己想做的事",IDC_BUTTON1,29,28,111,23
+END
+
+IDD_keyForm DIALOG DISCARDABLE  0, 0, 218, 129
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION " 请输入注册卡号"
+FONT 9, "宋体"
+BEGIN
+    PUSHBUTTON      "清空卡号",IDC_BUTTON1,92,108,50,14
+    PUSHBUTTON      "输入完毕",IDC_BUTTON2,152,108,50,14
+    EDITTEXT        IDC_EDIT1,8,8,200,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT2,8,28,200,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT3,8,48,200,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT4,8,68,200,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT5,8,88,200,14,ES_AUTOHSCROLL
+END
+
+IDD_YourForm DIALOG DISCARDABLE  0, 0, 254, 141
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "功能演示窗口"
+FONT 9, "宋体"
+BEGIN
+    PUSHBUTTON      "ks_advapi ('v_geta')",IDC_btn1,8,4,240,22
+    PUSHBUTTON      "ks_advapi ('v_getb,100,200') 首次连网并缓存，二次缓存获取 ",
+                    IDC_btn2,8,30,240,22
+    PUSHBUTTON      "ks_advapi ('v_getb,100,200') 先清除缓存，然后连网获取",
+                    IDC_btn3,8,57,240,22
+    PUSHBUTTON      "频率验证",IDC_btn4,8,83,104,22
+    PUSHBUTTON      "强制验证",IDC_btn5,144,83,104,22
+    PUSHBUTTON      "KS_GetData测试",IDC_btn6,8,109,104,22
+    PUSHBUTTON      "扣点测试",IDC_btn7,144,109,104,22
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "loginUser Microsoft 基础类应用程序\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "loginUser\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2012\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "loginUser.EXE\0"
+            VALUE "ProductName", "loginUser 应用程序\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_LOGINUSER_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 2
+        RIGHTMARGIN, 297
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 144
+    END
+
+    IDD_TAB01, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 133
+    END
+
+    IDD_TAB02, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 287
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 170
+    END
+
+    IDD_TAB03, DIALOG
+    BEGIN
+        RIGHTMARGIN, 284
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 168
+    END
+
+    IDD_IPCForm, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 91
+    END
+
+    IDD_keyForm, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 211
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 122
+    END
+
+    IDD_YourForm, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 247
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 134
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 loginUser(&A)..."
+END
+
+#endif    // Chinese (中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\loginUser.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

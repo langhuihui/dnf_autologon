@@ -1,0 +1,20 @@
+digraph G {
+graph [bgcolor=white]
+node [shape=circle, style = filled, fillcolor=white,fixedsize=true, width=0.4, height=0.3 ]
+0[xlabel="1242,315", pos = "17.4063,0!", fillcolor=palegreen ];
+1[xlabel="896,221", pos = "12,1.46875!", fillcolor=palegreen ];
+2[xlabel="410,221", pos = "4.40625,1.46875!", fillcolor=palegreen ];
+3[xlabel="243,227", pos = "1.79688,1.375!", fillcolor=palegreen ];
+4[xlabel="128,227", pos = "0,1.375!", fillcolor=deepskyblue, shape=box ];
+5[xlabel="1080,312", pos = "14.875,0.046875!", fillcolor=deepskyblue, shape=box ];
+0->1 ;
+0->5 ;
+1->0 ;
+1->2 ;
+2->1 ;
+2->3 ;
+3->2 ;
+3->4 ;
+4->3 ;
+5->0 ;
+}

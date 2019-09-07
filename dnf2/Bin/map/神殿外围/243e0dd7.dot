@@ -1,0 +1,50 @@
+digraph G {
+graph [bgcolor=white size="20,20"]
+node [shape=circle color=black]
+0[shape = polygon, sides = 4, label="692,88 [0]", pos = "0,0!" ];
+1[shape = polygon, sides = 4, label="710,88 [1]", pos = "2.25,0!" ];
+2[shape = polygon, sides = 4, label="710,70 [2]", pos = "2.25,2.25!" ];
+3[shape = polygon, sides = 4, label="710,52 [3]", pos = "2.25,4.5!" ];
+4[shape = polygon, sides = 4, label="692,52 [4]", pos = "0,4.5!" ];
+5[shape = polygon, sides = 4, label="728,70 [5]", pos = "4.5,2.25!" ];
+6[shape = polygon, sides = 4, label="746,70 [6]", pos = "6.75,2.25!" ];
+7[shape = polygon, sides = 4, label="746,88 [7]", pos = "6.75,0!" ];
+8[shape = polygon, sides = 4, label="764,70 [8]", pos = "9,2.25!" ];
+9[shape = polygon, sides = 4, label="764,52 [9]", pos = "9,4.5!" ];
+10[shape = polygon, sides = 4, label="746,52 [10]", pos = "6.75,4.5!" ];
+11[shape = polygon, sides = 4, label="728,52 [11]", pos = "4.5,4.5!" ];
+12[shape = polygon, sides = 4, label="782,52 [12]", pos = "11.25,4.5!" ];
+13[shape = polygon, sides = 4, label="782,70 [13]", pos = "11.25,2.25!" ];
+14[shape = polygon, sides = 4, label="764,88 [14]", pos = "9,0!" ];
+15[shape = polygon, sides = 4, label="782,88 [15]", pos = "11.25,0!" ];
+0->1 ;
+1->0 ;
+1->2 ;
+2->1 ;
+2->3 ;
+2->5 ;
+3->2 ;
+3->4 ;
+4->3 ;
+5->2 ;
+5->6 ;
+6->5 ;
+6->7 ;
+6->8 ;
+7->6 ;
+8->6 ;
+8->9 ;
+8->13 ;
+8->14 ;
+9->8 ;
+9->10 ;
+9->12 ;
+10->9 ;
+10->11 ;
+11->10 ;
+12->9 ;
+13->8 ;
+13->15 ;
+14->8 ;
+15->13 ;
+}

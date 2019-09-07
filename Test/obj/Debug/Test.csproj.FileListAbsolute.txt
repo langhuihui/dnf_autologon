@@ -1,0 +1,9 @@
+D:\projects\DNF自动登录器\Test\bin\Debug\Test.exe
+D:\projects\DNF自动登录器\Test\bin\Debug\Test.pdb
+D:\projects\DNF自动登录器\Test\obj\Debug\Test.exe
+D:\projects\DNF自动登录器\Test\obj\Debug\Test.pdb
+D:\projects\DNF自动登录器\Debug\Test.exe
+D:\projects\DNF自动登录器\Debug\Test.pdb
+D:\projects\DNF自动登录器\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
+D:\projects\DNF自动登录器\Test\obj\Debug\Interop.Shell32.dll
+D:\projects\DNF自动登录器\Test\obj\Debug\Test.csproj.ResolveComReference.cache

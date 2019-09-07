@@ -1,0 +1,17 @@
+digraph G {
+graph [bgcolor=white]
+node [shape=circle, style = filled, fillcolor=white,fixedsize=true, width=0.4, height=0.3 ]
+0[xlabel="281,290", pos = "3.5625,0.78125!", fillcolor=palegreen ];
+1[xlabel="805,340", pos = "11.75,0!", fillcolor=palegreen ];
+2[xlabel="1057,340", pos = "15.6875,0!", fillcolor=palegreen ];
+3[xlabel="53,250", pos = "0,1.40625!", fillcolor=deepskyblue, shape=box ];
+4[xlabel="1307,245", pos = "19.5938,1.48438!", fillcolor=deepskyblue, shape=box ];
+0->1 ;
+0->3 ;
+1->0 ;
+1->2 ;
+2->1 ;
+2->4 ;
+3->0 ;
+4->2 ;
+}

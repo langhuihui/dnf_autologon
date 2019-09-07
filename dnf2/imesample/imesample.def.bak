@@ -1,0 +1,39 @@
+LIBRARY         imesample
+DESCRIPTION     'Setoutsoft inputstar 2.0 for Chinese Windows'
+
+EXPORTS
+                ImeConversionList
+                ImeConfigure
+                ImeDestroy
+                ImeEscape
+                ImeInquire
+                ImeProcessKey
+                ImeSelect
+                ImeSetActiveContext
+                ImeSetCompositionString
+                ImeToAsciiEx
+                NotifyIME
+
+                ImeRegisterWord
+                ImeUnregisterWord
+                ImeGetRegisterWordStyle
+                ImeEnumRegisterWord
+
+                UIWndProc
+				StatusWndProc
+                CompWndProc
+                CandWndProc
+
+
+
+CharacterAddr DATA
+
+start_set_player DATA
+start_set_target DATA
+end_set_player DATA
+end_set_target DATA
+
+err_code DATA
+player_data_arr DATA
+target_data_arr DATA
+target_size DATA

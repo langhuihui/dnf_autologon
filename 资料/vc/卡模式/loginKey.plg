@@ -1,0 +1,57 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: loginKey - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/loginKey.res" /d "_DEBUG" /d "_AFXDLL" "D:\ksreg_delphi\V9\eg9.1\vc\卡模式\loginKey.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C3.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/loginKey.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\ksreg_delphi\V9\eg9.1\vc\卡模式\IPCFormDialog.cpp"
+"D:\ksreg_delphi\V9\eg9.1\vc\卡模式\ksreglib.cpp"
+"D:\ksreg_delphi\V9\eg9.1\vc\卡模式\loginKey.cpp"
+"D:\ksreg_delphi\V9\eg9.1\vc\卡模式\loginKeyDlg.cpp"
+"D:\ksreg_delphi\V9\eg9.1\vc\卡模式\YourFormDialog.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C3.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C4.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/loginKey.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\ksreg_delphi\V9\eg9.1\vc\卡模式\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C4.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C5.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Release/loginKey.pdb" /debug /machine:I386 /out:"Release/loginKey.exe" /pdbtype:sept 
+".\Debug\IPCFormDialog.obj"
+".\Debug\ksreglib.obj"
+".\Debug\loginKey.obj"
+".\Debug\loginKeyDlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\YourFormDialog.obj"
+".\Debug\loginKey.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C5.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+IPCFormDialog.cpp
+ksreglib.cpp
+loginKey.cpp
+loginKeyDlg.cpp
+YourFormDialog.cpp
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+loginKey.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

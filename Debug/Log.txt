@@ -1,0 +1,18 @@
+[10-03 01:11:59]读取配置文件
+[10-03 01:11:59]C:\Program Files\腾讯游戏\地下城与勇士\TCLS\Client.exe
+D:\projects\DNF自动登录器\Debug\DNF自动登录器.exe
+D:\projects\DNF自动登录器\Debug\DNF自动登录器.exe
+8-14 15-20 21-1
+#宽带连接
+#本地连接
+[10-03 01:11:59]读取帐号列表
+[10-03 01:11:59]读取网卡列表
+[10-03 01:11:59]尝试重新启动
+[10-03 01:11:59]启动自动登录，先执行清理
+[10-03 01:12:40]启动游戏
+[10-03 01:12:40]系统找不到指定的文件。   在 System.Diagnostics.Process.StartWithShellExecuteEx(ProcessStartInfo startInfo)
+   在 System.Diagnostics.Process.Start(ProcessStartInfo startInfo)
+   在 DProtector.MainWindow.LaunchGame() 位置 D:\Project\DNF自动登录器\守护程序WPF版\MainWindow.xaml.cs:行号 310
+   在 DProtector.MainWindow.LaunchAutoLogin() 位置 D:\Project\DNF自动登录器\守护程序WPF版\MainWindow.xaml.cs:行号 323
+   在 DProtector.MainWindow.TryLaunchAutoLogin() 位置 D:\Project\DNF自动登录器\守护程序WPF版\MainWindow.xaml.cs:行号 395
+   在 DProtector.MainWindow..ctor() 位置 D:\Project\DNF自动登录器\守护程序WPF版\MainWindow.xaml.cs:行号 101

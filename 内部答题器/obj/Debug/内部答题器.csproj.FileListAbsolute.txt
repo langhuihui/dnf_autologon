@@ -1,0 +1,12 @@
+D:\projects\DNF自动登录器\内部答题器\bin\Debug\内部答题器.exe
+D:\projects\DNF自动登录器\内部答题器\bin\Debug\内部答题器.pdb
+D:\projects\DNF自动登录器\内部答题器\obj\Debug\内部答题器.csprojResolveAssemblyReference.cache
+D:\projects\DNF自动登录器\内部答题器\obj\Debug\MainWindow.baml
+D:\projects\DNF自动登录器\内部答题器\obj\Debug\MainWindow.g.cs
+D:\projects\DNF自动登录器\内部答题器\obj\Debug\App.g.cs
+D:\projects\DNF自动登录器\内部答题器\obj\Debug\内部答题器_MarkupCompile.cache
+D:\projects\DNF自动登录器\内部答题器\obj\Debug\内部答题器.g.resources
+D:\projects\DNF自动登录器\内部答题器\obj\Debug\内部答题器.Properties.Resources.resources
+D:\projects\DNF自动登录器\内部答题器\obj\Debug\内部答题器.csproj.GenerateResource.Cache
+D:\projects\DNF自动登录器\内部答题器\obj\Debug\内部答题器.exe
+D:\projects\DNF自动登录器\内部答题器\obj\Debug\内部答题器.pdb

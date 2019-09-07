@@ -1,0 +1,1368 @@
+#include "room.h"
+
+
+
+//namespace dnf{
+//	namespace map{
+//		namespace room{
+
+_ROOM_BEGIN
+			
+			/////////////////////////////////////////////////////
+			//	记录点类
+			Node::Node()
+				:type( unused )
+			{}
+
+			void Node::set_door_type()
+			{
+				type = door;
+			}
+			void Node::set_record_type()
+			{
+				type = record;
+			}
+
+			bool Node::operator==( const Node& node ) const
+			{
+				node.pos.corrent_assert();
+				node.pos.init_assert();
+
+				if( node.pos == pos
+					&& node.type == type )
+					return true;
+				else
+					return false;
+			}
+			bool Node::operator!=( const Node& node ) const
+			{
+				return !operator==( node );
+			}
+
+			Edge::Edge()
+				:weight( 0.f )
+			{}
+
+			Edge::Edge( const Node& source, const Node& target )
+				:weight( compute_distance( source.pos, target.pos ) )
+			{
+				source.pos.corrent_assert();
+				source.pos.init_assert();
+
+				target.pos.corrent_assert();
+				target.pos.init_assert();
+
+			}
+
+			void Edge::set_weight( const Node& source, const Node& target )
+			{
+				source.pos.corrent_assert();
+				source.pos.init_assert();
+				target.pos.corrent_assert();
+				target.pos.init_assert();
+
+				weight = compute_distance( source.pos, target.pos );
+			}
+
+			void Edge::corrent_assert() const
+			{
+				assert( weight > 0.f
+					&& "weight未初始化" );
+			}
+
+			bool Edge::operator==( const Edge& edge ) const
+			{
+				edge.corrent_assert();
+				if(  edge.weight == weight )
+					return true;
+				else
+					return false;
+			}
+
+			bool Edge::operator!=( const Edge& edge ) const
+			{
+				return !operator==( edge );
+			}
+
+			//	NodeMgr
+			NodeMgr::NodeMgr()
+			{
+			}
+
+			bool NodeMgr::has_record_node()
+			{
+				if( 0 == boost::num_vertices( _g ) )
+					return false;
+
+				for( pvi_t pvi = boost::vertices( _g );
+					pvi.first != pvi.second; pvi.first++ )
+					if( _g[ *pvi.first ].type == Node::record )
+						return true;
+
+				return false;
+			}
+
+			Node NodeMgr::nearest_record_node( const Node& node )
+			{
+				assert( has_vertex( node )
+					&& "NodeMgr::nearest_record_node:node不在NodeMgr中" );
+
+				assert( has_record_node()
+					&& "NodeMgr::nearest_record_node:NodeMgr中不存在record点" );
+
+				Node shortest_record_node;
+				shortest_record_node.set_record_type();
+
+				float shortest_dis = 0;
+				float dis;
+				
+				for( pvi_t pvi = boost::vertices( _g );
+					pvi.first != pvi.second; pvi.first++ )
+					if( _g[ *pvi.first ].type == Node::record
+						&& _g[ *pvi.first ] != node )
+					{
+						dis = compute_distance( _g[ *pvi.first ].pos, node.pos );
+						
+						if( 0 == shortest_dis
+							|| dis < shortest_dis )
+						{
+							shortest_dis = dis;
+							shortest_record_node = _g[ *pvi.first ];
+						}
+					}
+
+				assert( has_vertex( shortest_record_node )
+					&& "NodeMgr::nearest_record_node:找不到最近的记录点" );
+
+				return shortest_record_node;
+			}
+			
+			Node NodeMgr::nearest_record_node( const Pos& pos )
+			{
+				pos.init_assert();
+				pos.corrent_assert();
+
+				assert( has_record_node()
+					&& "NodeMgr::nearest_record_node:NodeMgr中不存在record点" );
+
+				Node shortest_record_node;
+				shortest_record_node.set_record_type();
+
+				float shortest_dis = 0;
+				float dis;
+
+				bool is_first = true;
+				
+				for( pvi_t pvi = boost::vertices( _g );
+					pvi.first != pvi.second; pvi.first++ )
+					if( _g[ *pvi.first ].type == Node::record )
+					{
+						dis = compute_distance( _g[ *pvi.first ].pos, pos );
+						
+						if( is_first )
+						{
+							shortest_dis = dis;
+							shortest_record_node = _g[ *pvi.first ];
+							is_first = false;
+						}
+
+						if( dis < shortest_dis )
+						{
+							shortest_dis = dis;
+							shortest_record_node = _g[ *pvi.first ];
+						}
+					}
+
+				assert( has_vertex( shortest_record_node )
+					&& "NodeMgr::nearest_record_node:找不到最近的记录点" );
+
+				return shortest_record_node;
+			}
+
+			
+			vector<Pos> NodeMgr::nearest_record_left_pos( const Pos& pos )
+			{
+				pos.init_assert();
+				pos.corrent_assert();
+
+				vector<Pos> ret_path;
+
+
+				assert( has_record_node()
+					&& "NodeMgr::nearest_record_left_pos:NodeMgr中不存在record点" );
+
+				using _ROOM::Node;
+				Node current_node
+					 = nearest_record_node( pos );
+
+				vd_t current_vd = get_vd( current_node );
+
+
+				assert( has_vertex( current_node )
+					&& "NodeMgr::nearest_record_left_pos:pos所在的位置并不存在记录点" );
+
+				
+				Node target_node;
+
+				float shortest_dis = 0;
+				float dis;
+
+				bool is_first = true;
+				
+				for( pvi_t pvi = boost::vertices( _g );
+					pvi.first != pvi.second; pvi.first++ )
+					if( _g[ *pvi.first ].type == Node::record
+						&& _g[ *pvi.first ].pos.x < current_node.pos.x 	
+						)
+					{
+						dis = compute_distance( _g[ *pvi.first ].pos, pos );
+						
+						if( is_first )
+						{
+							shortest_dis = dis;
+							target_node = _g[ *pvi.first ];
+							is_first = false;
+						}
+
+						if( dis < shortest_dis )
+						{
+							shortest_dis = dis;
+							target_node = _g[ *pvi.first ];
+						}
+					}
+					
+				if( Node::unused == target_node.type )
+					return ret_path;
+
+				//assert( Node::unused != target_node.type
+				//	&& "NodeMgr::nearest_record_left_pos:找不到更靠左的记录点" );
+				
+				if( Node::unused == target_node.type )
+				{
+					trace( "NodeMgr::nearest_record_left_pos:找不到更靠左的记录点" );
+					_DNF::Sync::set_return_town();
+					while( true )
+						Sleep( 10000 );
+				}
+				assert( has_vertex( target_node )
+					&& "NodeMgr::nearest_record_left_pos:不存在目标记录点" );
+
+				set_shortest_path( current_node, target_node );
+
+				assert( _shortest_path_vd.size() > 1 
+					&& "NodeMgr::nearest_record_left_pos:计算的最短路径无效" );
+
+
+				for( size_t i = 0; i < _shortest_path_vd.size(); i++ )
+					ret_path.push_back( _g[ _shortest_path_vd[ i ] ].pos );
+
+				return ret_path;
+			}
+
+			vector<Pos> NodeMgr::nearest_record_right_pos( const Pos& pos )
+			{
+				pos.init_assert();
+				pos.corrent_assert();
+
+				vector<Pos> ret_path;
+
+				if( !has_record_node() )
+					ret_path;
+					
+				assert( has_record_node()
+					&& "NodeMgr::nearest_record_right_pos:NodeMgr中不存在record点" );
+
+				using _ROOM::Node;
+				Node current_node
+					 = nearest_record_node( pos );
+
+				vd_t current_vd = get_vd( current_node );
+
+				assert( has_vertex( current_node )
+					&& "NodeMgr::nearest_record_right_pos:pos所在的位置并不存在记录点" );
+				
+				Node target_node;
+
+				float shortest_dis = 0;
+				float dis;
+
+				bool is_first = true;
+				
+				for( pvi_t pvi = boost::vertices( _g );
+					pvi.first != pvi.second; pvi.first++ )
+					if( _g[ *pvi.first ].type == Node::record
+						&& _g[ *pvi.first ].pos.x > current_node.pos.x 	
+						)
+					{
+						dis = compute_distance( _g[ *pvi.first ].pos, pos );
+						
+						if( is_first )
+						{
+							shortest_dis = dis;
+							target_node = _g[ *pvi.first ];
+							is_first = false;
+						}
+
+						if( dis < shortest_dis )
+						{
+							shortest_dis = dis;
+							target_node = _g[ *pvi.first ];
+						}
+					}
+				if( Node::unused == target_node.type )
+					return ret_path;
+
+				//assert( Node::unused != target_node.type
+				//	&& "NodeMgr::nearest_record_left_pos:找不到更靠右的记录点" );
+				if( Node::unused == target_node.type )
+				{
+					trace( "NodeMgr::nearest_record_left_pos:找不到更靠右的记录点" );
+					_DNF::Sync::set_return_town();
+					while( true )
+						Sleep( 10000 );
+				}
+
+				assert( has_vertex( target_node )
+					&& "NodeMgr::nearest_record_right_pos:不存在目标记录点" );
+
+				set_shortest_path( current_node, target_node );
+
+				assert( _shortest_path_vd.size() > 1 
+					&& "NodeMgr::nearest_record_right_pos:计算的最短路径无效" );
+
+				for( size_t i = 0; i < _shortest_path_vd.size(); i++ )
+					ret_path.push_back( _g[ _shortest_path_vd[ i ] ].pos );
+
+				return ret_path;
+			}
+
+			void NodeMgr::update_door_edge()
+			{
+				assert( has_record_node()
+					&& "NodeMgr::update_door_edge:不存在Record点,无法更新" );
+
+				for( pvi_t pvi = boost::vertices( _g );
+					pvi.first != pvi.second; pvi.first++ )
+					if( _g[ *pvi.first ].type == Node::door )
+					{
+						boost::clear_vertex( *pvi.first, _g );
+
+						Node node = nearest_record_node( _g[ *pvi.first ] );
+
+						Edge edge;
+						edge.set_weight( _g[ *pvi.first ], node );
+
+						add_biedge( _g[ *pvi.first ], node, edge );
+					}
+			}
+
+			void NodeMgr::save_dot( const string& file_name ) const
+			{
+				assert( !file_name.empty()
+					&& "NodeMgr.save_dot:保存的文件名为空" );
+
+				assert( boost::num_vertices( _g ) 
+					&& "NodeMgr.save_dot:_g节点为空" );
+
+				ofstream ofs( file_name );
+
+				if( !ofs )
+					throw std::exception( "NodeMgr.save_dot:打不开保存文件" );
+
+				struct vertex_writer {
+
+					vertex_writer(
+						const graph_t& g
+						)
+						:_g( g )
+					{
+						vector<int> pos_x_vec;
+						vector<int> pos_y_vec;
+
+						typedef graph_traits<graph_t>::vertex_iterator vi_t;
+						pair<vi_t, vi_t> vp;
+
+						for( vp = boost::vertices( _g );
+							vp.first != vp.second; vp.first++ )
+						{
+							pos_x_vec.push_back( _g[ *(vp.first) ].pos.x );
+							pos_y_vec.push_back( _g[ *(vp.first) ].pos.y );
+						}
+
+						min_pos_x = *min_element( pos_x_vec.begin(), pos_x_vec.end() );
+						//min_pos_y = *min_element( pos_y_vec.begin(), pos_y_vec.end() );
+						//max_pos_x = *max_element( pos_x_vec.begin(), pos_x_vec.end() );
+						max_pos_y = *max_element( pos_y_vec.begin(), pos_y_vec.end() );
+					}
+
+					void operator()(std::ostream& out, const vd_t& v ) const 
+					{
+						Pos pos;
+						pos.x = _g[ v ].pos.x - min_pos_x;
+						pos.y = max_pos_y - _g[ v ].pos.y;
+
+						float x = (float)pos.x / 64.f;
+						float y = (float)pos.y / 64.f;
+
+						//out << "[shape = polygon, sides = 4, label=\""
+						out << "[xlabel=\""
+							<< _g[ v ].pos.x// - min_pos_x
+							<< ','
+							<< _g[ v ].pos.y// - min_pos_y
+							//<< " ["
+							//<< v
+							//<< "]"
+							<< "\", pos = \""
+							<< x
+							<< ','
+							<< y
+							<< "!\"";
+
+						if( Node::record == _g[ v ].type )
+							out << ", fillcolor=palegreen";
+						if( Node::door == _g[ v ].type )
+							out << ", fillcolor=deepskyblue, shape=box";
+
+						out << " ]" ;
+					}
+
+					int min_pos_x;
+					//int min_pos_y;
+					//int max_pos_x;
+					int max_pos_y;
+
+					const graph_t& _g;
+				};
+
+				struct edge_writer {
+					edge_writer(
+						const graph_t& g,
+						const vector<ed_t>& shortest_path_ed_
+						)
+						:_g( g ),
+						shortest_path_ed( shortest_path_ed_ )
+					{}
+
+					void operator()(std::ostream& out, const ed_t& e ) const
+					{
+						//out << "[ label = \""
+						//	<< _g[ e ].weight
+						//	<< "\" ";
+
+						if( find( shortest_path_ed.begin(), shortest_path_ed.end(), e ) 
+							!= shortest_path_ed.end() )
+							//out << ", color = red ";
+							out << "[ color = red ]";
+
+						//out	<< "]" ;
+
+					}
+					const graph_t& _g;
+					const vector<ed_t>& shortest_path_ed;
+				};
+
+				struct graph_writer {
+					void operator()(std::ostream& out) const {
+						//out << "graph [bgcolor=white size=\"20,20\"]" << endl;
+						out << "graph [bgcolor=white]" << endl;
+						out << "node [shape=circle, style = filled, fillcolor=white,"
+							<< "fixedsize=true, width=0.4, height=0.3 ]" << endl;
+						//out << "edge [style=dashed]" << endl;
+					}
+				};
+
+				write_graphviz(
+					ofs, 
+					_g,  
+					vertex_writer( _g ),
+					edge_writer( _g, _shortest_path_ed ),
+					graph_writer()
+					);
+			}
+
+
+			//////////////////////////////////////////////////////
+			//	RFP需要的内部类型
+			FPPoint::FPPoint()
+			{
+			}
+
+			bool FPPoint::operator==( const FPPoint& fppoint ) const
+			{
+				fppoint.pos.corrent_assert();
+
+				if( fppoint.id == id
+					&& fppoint.pos == pos )
+					return true;
+				else
+					return false;
+			}
+
+			bool FPPoint::operator!=( const FPPoint& fppoint ) const
+			{
+				return !operator==( fppoint );
+			}
+
+			//////////////////////////////////////////////////////
+			//	房间指纹类，用于识别房间
+			RoomFingerPrint::RoomFingerPrint()
+				:_comp_scale( 0.7f )
+			{
+			}
+
+			void RFP::clear()
+			{
+				_1057_33_list.clear();
+			}
+
+			bool RFP::empty() const
+			{
+				return _1057_33_list.empty();
+			}
+
+
+			size_t RFP::size() const
+			{
+				return _1057_33_list.size(); 
+			}
+
+			bool RFP::has_fppoint( const FPPoint& fppoint ) const
+			{
+				fppoint.pos.corrent_assert();
+
+				assert( 33 == fppoint.id 
+					|| 1057 == fppoint.id 
+					&& "RFP::has_fppoint:id不正确" );
+
+				if( _1057_33_list.empty() )
+					return false;
+
+				for( size_t i = 0; i < _1057_33_list.size(); i++ )
+					if( fppoint == _1057_33_list[ i ] )
+						return true;
+
+				return false;
+			}
+
+			void RFP::set( vector<Target>& target_list )
+			{
+				assert( !target_list.empty() 
+					&& "RFP::set:target_list为空" );
+
+#ifdef _DEBUG
+				size_t cnt = 0;
+
+				for( size_t i = 0; i < target_list.size(); i++ )
+					if( 
+						1057 == target_list[ i ].id
+						|| 33 == target_list[ i ].id 
+						)
+					{
+						cnt++;
+
+
+						/*
+						assert( Pos() != target_list[ i ].map_pos
+							&& "RFP::set:target_list[ i ].map_pos未初始化" );
+							*/
+
+
+						target_list[ i ].map_pos.corrent_assert();
+					}
+
+					assert( cnt
+						&& "RFP::set:1057和33为空" );
+
+#endif
+					_1057_33_list.clear();
+
+					FPPoint fppoint;
+
+					for( size_t i = 0; i < target_list.size(); i++ )
+						if( 
+							1057 == target_list[ i ].id
+							|| 33 == target_list[ i ].id 
+							)
+						{
+							fppoint.id = target_list[ i ].id;
+							fppoint.pos = target_list[ i ].map_pos;
+
+							_1057_33_list.push_back(
+								fppoint );
+						}
+
+						corrent_assert();
+			}
+
+//			bool RFP::operator==( const RoomFingerPrint& rfp ) const
+//			{
+//				corrent_assert();
+//				rfp.corrent_assert();
+//
+//				size_t comp_equal_cnt = 0;
+//
+//				size_t comp_size = 0;
+//				//	对元素较少的那个
+//				//	做比例比较。
+//				if( size() < rfp.size() )
+//					comp_size = size();
+//				else
+//					comp_size = rfp.size();
+//
+//				for( size_t i = 0; i < size(); i++ )
+//					if( rfp.has_fppoint( _1057_33_list[ i ] ) )
+//						comp_equal_cnt++;
+//
+//				if( (float)comp_equal_cnt / (float)comp_size > _comp_scale )
+//					return true;
+//				else
+//					return false;
+//
+//			}
+//
+//			bool RFP::operator!=( const RoomFingerPrint& rfp ) const
+//			{
+//				return !operator==( rfp );
+//			}
+
+			FPPoint& RFP::operator[]( size_t index )
+			{
+				assert( index < size()
+					&& "RFP::operator[]:index超出范围" );
+
+				return _1057_33_list[ index ];
+			}
+//
+			void RFP::corrent_assert() const
+			{
+				assert( !_1057_33_list.empty()
+					&& "RFP::set:_1057_33_list为空，错误" );
+
+#ifdef _DEBUG
+				for( size_t i = 0; i < _1057_33_list.size(); i++ )
+				{
+					/*
+					assert( Pos() != _1057_33_list[ i ].pos
+						&& "RFP::set:_1057_33_list[ i ]未初始化" );
+						*/
+
+					_1057_33_list[ i ].pos.corrent_assert();
+				}
+#endif
+			}
+
+			float RFP::get_comp_scale()
+			{
+				return _comp_scale;
+			}
+			
+			void RFP::set_comp_scale( float comp_scale )
+			{
+				assert( comp_scale > 0 
+					&& comp_scale < 1
+					&& "RFP::set_comp_scale:comp_scale不合法" );
+
+				_comp_scale = comp_scale;
+			}
+
+			float comp_sim( RoomFingerPrint& rfp_first, RoomFingerPrint& rfp_second )
+			{
+				rfp_first.corrent_assert();
+				rfp_second.corrent_assert();
+
+				float sim = 0.f;
+
+				size_t comp_equal_cnt = 0;
+				size_t comp_size = 0;
+				int size = 0;
+
+				if( rfp_first.size() < rfp_second.size() )
+					comp_size = rfp_first.size();
+				else
+					comp_size = rfp_second.size();
+
+				for( size_t i = 0; i < rfp_first.size(); i++ )
+					if( rfp_second.has_fppoint( rfp_first[ i ] ) )
+						comp_equal_cnt++;
+
+				assert( comp_size >= comp_equal_cnt
+					&& "comp_sim::comp_size < comp_equal_cnt" );
+
+				sim = (float)comp_equal_cnt / (float)comp_size;
+
+				return sim;
+			}
+
+			/*
+			/////////////////////////////
+			//	内部使用
+			//	RFP测试工具
+			__RFPTest::__RFPTest( World& world )
+				:_world( world )
+			{}
+
+			//	1，33是否是会减少或者增加
+			void __RFPTest::test1_change_33()
+			{
+				_world.update_target_group_map_pos();
+				_display_target_group();
+				_world.update_map_win_pos();
+				cout << "--------------------------" << endl;
+				cout << _world.map_pos.x << ", " << _world.map_pos.y << endl;
+
+				while( true )
+				{
+					_world.update_map_win_pos();
+					if( !_world.map_pos.is_invaild() )
+						if( _is_same_room() )
+						{
+							_world.update_target_group_map_pos();
+
+							if( _33_list.empty() )
+							{
+								for( size_t i = 0; i < _world.target_group.size(); i++ )
+									if(  33 == _world.target_group[ i ].id 
+										&& !_world.target_group[  i ].map_pos.is_invaild() )
+										_33_list.push_back(
+										_world.target_group[ i ].map_pos );
+							}
+							else
+							{
+								bool over_273 = false;
+								size_t j = 0;
+								for( size_t i = 0; i < _world.target_group.size(); i++ )
+								{
+									if( 273 == _world.target_group[ i ].id )
+										over_273 = true;
+									if( 33 == _world.target_group[ i ].id
+										&& !_world.target_group[ i ].map_pos.is_invaild()
+										&& !over_273 )
+									{
+										assert( j < _33_list.size()
+											&& "__RFPTest::test1_change_33:j超出范围" );
+										if( j >= _33_list.size() )
+										{
+											cout << "_33_list数量增加" << endl;
+											_display_33_list();
+											_display_target_group();
+											continue;
+										}
+
+										if( _33_list[ j ] != _world.target_group[ i ].map_pos )
+										{
+											cout << "_33_list[ " << j << " ]坐标改变" << endl;
+											_display_33_list();
+											_display_target_group();
+										}
+										j++;
+									}
+								}
+
+								if( j < _33_list.size() )
+								{
+									cout << "_33_list数量减少" << endl;
+									_display_33_list();
+									_display_target_group();
+								}
+
+								_33_list.clear();
+								for( size_t i = 0; i < _world.target_group.size(); i++ )
+									if(  33 == _world.target_group[ i ].id 
+										&& !_world.target_group[  i ].map_pos.is_invaild() )
+										_33_list.push_back(
+										_world.target_group[ i ].map_pos );
+							}
+
+						}
+						else
+							_33_list.clear();
+
+					dnf::map::wait( 1 );
+				}
+			}
+			
+			//	2，是否存在没有33或者没1057的房间
+			void __RFPTest::test2_no_33_or_1057()
+			{
+
+			}
+
+			//	3，使用RFP测试一个地图有多少相同的地图
+			void __RFPTest::test3_same_room()
+			{
+				//_world.update_map_win_pos();
+				//
+				//if( !
+
+				//if( !_world.map_pos.is_invaild()
+				//	&& _world.map_pos != _last_map_pos )
+				//{
+			}
+
+			bool __RFPTest::_is_same_room()
+			{
+				_world.update_map_win_pos();
+
+				if( !_last_map_pos.is_init() 
+					&& !_world.map_pos.is_invaild() )
+				{
+					_last_map_pos = _world.map_pos;
+					return true;
+				}
+
+				if( _last_map_pos.is_init()
+					&& !_world.map_pos.is_invaild()
+					&& _last_map_pos != _world.map_pos )
+				{
+					_last_map_pos = _world.map_pos;
+					return false;
+				}
+				else
+					return true;
+			}
+
+			void __RFPTest::_display_33_list()
+			{
+				cout << "------------------------" << endl;
+				cout << "_33_list:" << endl;
+				for( size_t i = 0; i < _33_list.size(); i++ )
+					cout << i << ": (" << _33_list[ i ].x
+					<< ", " << _33_list[ i ].y << ")" << endl;
+				cout << "------------------------" << endl;
+			}
+
+			void __RFPTest::_display_target_group()
+			{
+				cout << "------------------------" << endl;
+				cout << "target_group:" << endl;
+				for( size_t i = 0; i < _world.target_group.size(); i++ )
+					cout << i << ":\t" << _world.target_group[ i ].id 
+					<< "->(" << _world.target_group[ i ].map_pos.x << ", "
+					<< _world.target_group[ i ].map_pos.y << ")" << endl;
+
+				cout << "------------------------" << endl;
+			}
+			*/
+
+			///////////////////////////////////////
+			//	门的数据结构
+			//	含门的方向
+			Door::Door()
+			{}
+
+			void Door::corrent_assert() const
+			{
+				pos.corrent_assert();
+				assert( dir != Dir::no
+					&& "Door::corrent_assert::dir == Dir::no" );
+			}
+
+			DoorMgr::DoorMgr()
+			{
+			}
+
+			void DoorMgr::add( const Door& door )
+			{
+				door.corrent_assert();
+
+				assert( door.pos.is_init()
+					&& "DoorMgr::add:door.pos未初始化" );
+
+				assert( !has_dir( door.dir )
+					&& "DoorMgr::add:door.dir已经存在" );
+
+				_door_list.push_back( door );
+			}
+
+			void DoorMgr::clear()
+			{
+				_door_list.clear();
+			}
+
+			size_t DoorMgr::size() const
+			{
+				return _door_list.size();
+			}
+
+			bool DoorMgr::empty() const
+			{
+				return _door_list.empty();
+			}
+			
+			bool DoorMgr::has_dir( const Dir dir ) const
+			{
+				assert( dir != Dir::no
+					&& "DoorMgr::_has_dir:dir == Dir::no" );
+
+				if( _door_list.empty() )
+					return false;
+
+				for( size_t i = 0; i < _door_list.size(); i++ )
+					if( dir == _door_list[ i ].dir )
+						return true;
+				
+				return false;
+			}
+
+			Pos DoorMgr::get_pos( const Dir dir ) const
+			{
+				assert( has_dir( dir )
+					&& "DoorMgr::get_pos:指定的dir不存在" );
+
+				for( size_t i = 0; i < _door_list.size(); i++ )
+					if( dir == _door_list[ i ].dir )
+						return _door_list[ i ].pos;
+			}
+
+			void DoorMgr::del_dir( const Dir dir ) 
+			{
+				assert( has_dir( dir )
+					&& "DoorMgr::del_dir:指定的dir不存在" );
+
+				for( vector<Door>::iterator it = _door_list.begin();
+					it != _door_list.end(); )
+					if( dir == it->dir )
+						it = _door_list.erase(it);
+					else
+						it++;
+			}
+
+			void DoorMgr::update( const Door& door )
+			{
+				door.corrent_assert();
+				if( has_dir( door.dir ) )
+					del_dir( door.dir );
+
+				add( door );
+			}
+
+			/////////////////////////////////////////////
+			//	DestoryBlock
+			//	可摧毁的障碍物
+			DestroyBlock::DestroyBlock()
+				:_is_set( false )
+			{
+			}
+
+			void DestroyBlock::clear()
+			{
+				_545_block_list.clear();
+				_1057_block_list.clear();
+                _33_block_list.clear();
+			}
+
+			void DestroyBlock::set_start( const vector<Target>& target_group )
+			{
+				assert( !target_group.empty() 
+					&& "DestroyBlock::set_start:target_group为空" );
+
+				clear();
+				_is_set = false;
+
+				for( size_t i = 0; i < target_group.size(); i++ )
+				{
+					if( 545 == target_group[ i ].id )
+					{
+						target_group[ i ].map_pos.corrent_assert();
+						assert( target_group[ i ].map_pos.is_init()
+							&& "DestroyBlock::set_start:target_group[ i ].map_pos(545)未初始化" );
+						_545_block_list.push_back(
+							target_group[ i ].map_pos );
+					}
+					if( 1057 == target_group[ i ].id )
+					{
+						target_group[ i ].map_pos.corrent_assert();
+						assert( target_group[ i ].map_pos.is_init()
+							&& "DestroyBlock::set_start:target_group[ i ].map_pos(1057)未初始化" );
+						_1057_block_list.push_back(
+							target_group[ i ].map_pos );
+					}
+                    if( 33 == target_group[ i ].id )
+                    {
+                        target_group[ i ].map_pos.corrent_assert();
+                        assert( target_group[ i ].map_pos.is_init()
+                            && "DestroyBlock::set_start:target_group[ i ].map_pos(33)未初始化" );
+
+                        _33_block_list_push_back(
+                            target_group[ i ].map_pos );
+				}
+			}
+
+			
+			bool DestroyBlock::is_end( const vector<Target>& target_group )
+			{
+				assert( !target_group.empty() 
+					&& "DestroyBlock::is_end:target_group为空" );
+
+				for( size_t i = 0; i < target_group.size(); i++ )
+					if( 529 == target_group[ i ].id )
+
+						return false;
+
+				return true;
+			}
+			
+			void DestroyBlock::set_end( const vector<Target>& target_group )
+			{
+				assert( !target_grooup.empty() 
+					&& "DestroyBlock::set_end:target_group为空" );
+				
+                bool is_found_273 = false;
+				for( size_t i = 0; i < target_group.size(); i++ )
+				{
+                    if( 273 == target_group[ i ].id )
+                      is_found_273 = true;
+                    
+					if( 545 == target_group[ i ].id )
+						del_545(target_group[ i ].map_pos );
+					if( 1057 == target_group[ i ].id )
+						del_1057( target_group[ i ].map_pos );
+
+                    if( !is_found_273 
+                        && 33 == target_group[ i ].id )
+                      del_33( target_group[ i ].map_pos );
+				}
+
+				_is_set = true;
+			}
+
+			
+			bool DestroyBlock::has_pos_545( const Pos& pos ) const
+			{
+				pos.corrent_assert();
+				assert( pos.is_init()
+					&& "DestroyBlock::has_pos_545:pos无效" );
+
+				for( size_t i = 0; i < _545_block_list.size(); i++ )
+					if( pos == _545_block_list[ i ] )
+						return true;
+
+				return false;
+			}
+
+			bool DestroyBlock::has_pos_1057( const Pos& pos ) const
+			{
+				pos.corrent_assert();
+				assert( pos.is_init()
+					&& "DestroyBlock::has_pos_1057:pos无效" );
+
+				for( size_t i = 0; i < _1057_block_list.size(); i++ )
+					if( pos == _1057_block_list[ i ] )
+						return true;
+
+				return false;
+			}
+
+            bool DestroyBlock::has_pos_33( const Pos& pos ) const
+            {
+                pos.corrent_assert();
+				assert( pos.is_init()
+					&& "DestroyBlock::has_pos_33:pos无效" );
+
+				for( size_t i = 0; i < _33_block_list.size(); i++ )
+					if( pos == _33_block_list[ i ] )
+						return true;
+
+				return false;
+            }
+
+			void DestroyBlock::del_545( const Pos& pos )
+			{
+				pos.corrent_assert();
+				assert( pos.is_init()
+					&& "DestroyBlock::has_pos_545:pos无效" );
+				//assert( has_pos_545( pos )
+				//	&& "DestroyBlock::del_545:要删除的pos不存在" );
+
+				for( vector<Pos>::iterator it = _545_block_list.begin();
+					it != _545_block_list.end(); )
+					if( pos == *it )
+						it = _545_block_list.erase(it);
+					else
+						it++;
+			}
+			void DestroyBlock::del_1057( const Pos& pos )
+			{
+				pos.corrent_assert();
+				assert( pos.is_init()
+					&& "DestroyBlock::has_pos_1057:pos无效" );
+				//assert( has_pos_1057( pos )
+				//	&& "DestroyBlock::del_1057:要删除的pos不存在" );
+
+				for( vector<Pos>::iterator it = _1057_block_list.begin();
+					it != _1057_block_list.end(); )
+					if( pos == *it )
+						it = _1057_block_list.erase(it);
+					else
+						it++;
+			}
+
+			void DestroyBlock::del_33( const Pos& pos )
+			{
+				pos.corrent_assert();
+				assert( pos.is_init()
+					&& "DestroyBlock::has_pos_33:pos无效" );
+				//assert( has_pos_33( pos )
+				//	&& "DestroyBlock::del_33:要删除的pos不存在" );
+
+				for( vector<Pos>::iterator it = _33_block_list.begin();
+					it != _33_block_list.end(); )
+					if( pos == *it )
+						it = _33_block_list.erase(it);
+					else
+						it++;
+			}
+
+			Pos DestroyBlock::nearest_pos( const Pos& pos ) const
+			{
+				assert( _is_set
+					&& "DestroyBlock::nearest_pos:障碍物未设置完成" );
+
+				pos.corrent_assert();
+				pos.init_assert();
+
+				float shortest_dis = 0.f;
+				size_t shortest_index = 0;
+				Pos shortest_pos;
+				for( size_t i = 0; i < _1057_block_list.size(); i++ )
+				{
+					float dis = compute_distance( _1057_block_list[ i ], pos );
+
+					if( 0 == i )
+					{
+						shortest_dis = dis;
+						shortest_index = i;
+					}
+					else
+					{
+						if( dis < shortest_dis )
+						{
+							shortest_dis = dis;
+							shortest_index = i;
+						}
+					}
+				}
+
+				shortest_pos = _1057_block_list[ shortest_index ];
+				shortest_index = -1;
+
+				for( size_t i = 0; i < _545_block_list.size(); i++ )
+				{
+					float dis = compute_distance( _545_block_list[ i ], pos );
+					if( dis < shortest_dis )
+					{
+						shortest_dis = dis;
+						shortest_index = i;
+					}
+				}
+
+				if( -1 != shortest_index )
+					shortest_pos = _545_block_list[ shortest_index ];
+
+				return shortest_pos;
+			}
+
+			vector<Pos> DestroyBlock::near_pos( 
+				const Pos& pos, 
+				vector<Target>& target_group,
+				float distance 
+				)
+			{
+				pos.corrent_assert();
+				pos.init_assert();
+				pos.invalid_assert();
+
+                assert( is_set() 
+                    && "DestroyBlock::near_pos:is_set为假" );
+
+				assert( distance > 0 && distance < 3000
+					&& "DestroyBlock::near_pos:distance超出范围" );
+
+				assert( !target_group.empty()
+					&& "DestroyBlock::near_pos:target_group为空" );
+
+				vector<Pos> ret_pos_list;
+
+				for( size_t i = 0; i < target_group.size(); i++ )
+				{
+					if( 1057 == target_group[ i ].id 
+						&& has_pos_1057( target_group[ i ].map_pos )
+						&& compute_distance( target_group[ i ].map_pos,
+											pos ) < distance
+						)
+						ret_pos_list.push_back( target_group[ i ].map_pos );
+								
+					if( 545 == target_group[ i ].id 
+						&& has_pos_545( target_group[ i ].map_pos )
+						&& compute_distance( target_group[ i ].map_pos,
+											pos ) < distance
+						)
+						ret_pos_list.push_back( target_group[ i ].map_pos );
+
+                    if( 33 == target_group[ i ].id
+                        && has_pos_33( target_group[ i ].map_pos )
+                        && compute_distance( target_group[ i ].map_pos,
+                                            pos ) < distance
+                      )
+                      ret_pos_list.push_back( target_group[ i ].map_pos );
+				}
+
+				return ret_pos_list;
+			}
+
+			vector<Pos> DestroyBlock::near_win_pos( 
+				const Pos& pos, 
+				vector<Target>& target_group,
+				float distance 
+				)
+			{
+				pos.corrent_assert();
+				pos.init_assert();
+				pos.invalid_assert();
+
+                assert( is_set()
+                    && "DestroyBlock::near_pos:is_set为假" );
+
+				assert( distance > 0 && distance < 3000
+					&& "DestroyBlock::near_pos:distance超出范围" );
+
+				assert( !target_group.empty()
+					&& "DestroyBlock::near_pos:target_group为空" );
+
+
+				vector<Pos> ret_pos_list;
+
+				for( size_t i = 0; i < target_group.size(); i++ )
+				{
+					if( 1057 == target_group[ i ].id 
+						&& has_pos_1057( target_group[ i ].map_pos )
+						&& compute_distance( target_group[ i ].map_pos,
+											pos ) < distance
+						)
+					{
+						target_group[ i ].win_pos.init_assert();
+						ret_pos_list.push_back( target_group[ i ].win_pos );
+					}
+								
+					if( 545 == target_group[ i ].id 
+						&& has_pos_545( target_group[ i ].map_pos )
+						&& compute_distance( target_group[ i ].map_pos,
+											pos ) < distance
+						)
+					{
+						target_group[ i ].win_pos.init_assert();
+						ret_pos_list.push_back( target_group[ i ].win_pos );
+					}
+
+                    if( 33 == target_group[ i ].id
+                        && has_pos_33( target_group[ i ].map_pos )
+                        && compute_distance( target_group[ i ].map_pos,
+                                            pos ) < distance
+                      )
+                    {
+                        target_group[ i ].win_pos.init_assert();
+                        ret_pos_list.push_back( target_group[ i ].win_pos );
+                    }
+				}
+
+				return ret_pos_list;
+			}			
+
+
+			bool DestroyBlock::is_set()
+			{
+				return _is_set;
+			}
+
+			//	--------------------------
+			Room::Room()
+				:_is_changed( false )
+			{}
+
+			string Room::get_filename( const string& _ext )
+			{
+				//assert( !_file_name.empty()
+				//	&& "Room::get_filename:_file_name为空" );
+				
+				if( _file_name.empty() )
+					return _ext;
+
+				size_t pos = _file_name.find_last_of( '.' );
+				assert( pos != string::npos
+					&& "Room::get_filename:_file_name格式不正确" );
+
+				return _file_name.substr( 0, pos ) + _ext;
+			}
+
+
+			void Room::set_filename( const string& file_name )
+			{
+				assert( !file_name.empty()
+					&& "Room::set_filename:file_name为空" );
+
+				assert( file_name.find( '.' ) != string::npos
+					&& "Room::set_filename:file_name格式不正确" );
+
+				_file_name = file_name;
+			}
+
+			//	保存自身
+			void Room::save(const string& file_name )
+			{
+				ofstream ofs;
+				if( "" != file_name )
+					ofs.open( file_name );	
+				else
+				{
+					assert( !_file_name.empty()
+						&& "Room::save:main_file_name为空" );
+
+					ofs.open( _file_name );
+				}
+
+				if( !ofs )
+					throw std::exception( "Room::save无法打开文件." );
+
+				boost::archive::text_oarchive boa( ofs );
+
+				boa & *this;
+			}
+
+			void Room::load(const string& file_name )
+			{
+				ifstream ifs;
+				if( "" != file_name )
+					ifs.open( file_name );
+				else
+				{
+					assert( !_file_name.empty()
+						&& "Room::load:main_file_name为空" );
+
+					ifs.open( _file_name );
+				}
+				if( !ifs )
+					throw std::exception( "Room::load无法打开文件." );
+
+				boost::archive::text_iarchive bia( ifs );
+
+				bia & *this;
+			}
+			bool Room::is_changed()
+			{
+				return _is_changed;
+			}
+			void Room::set_changed()
+			{
+				_is_changed = true;
+			}
+			void Room::set_unchanged()
+			{
+				_is_changed = false;
+			}
+
+_ROOM_END
+
+//
+//		}	//	room
+//	}	//	map
+//}	//	dnf

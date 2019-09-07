@@ -1,0 +1,17 @@
+﻿<Window x:Class="内部答题器.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="406" Width="581">
+    <Grid>
+        <Image x:Name="TheImage" HorizontalAlignment="Left" Height="300
+               " Margin="10,10,0,0" VerticalAlignment="Top" Width="400"/>
+        <ListBox x:Name="SocketList" Height="300" Margin="0,10,4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="143" SelectionChanged="SocketList_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Display}" FontSize="24"></Label>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBox x:Name="InputControl" HorizontalAlignment="Left" Height="36" Margin="10,0,0,10" TextWrapping="NoWrap" VerticalAlignment="Bottom" Width="252" FontSize="24"  KeyDown="TextBox_KeyDown"/>
+    </Grid>
+</Window>

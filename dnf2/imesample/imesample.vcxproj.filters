@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{f2e31b6c-4848-43e8-bf0c-df84f646e68c}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{c697d8bb-0601-40ad-a21f-7196186363ea}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{193b18cf-63cc-4d50-b060-7b0201d81c4a}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="helper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="imm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="immex.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="regword.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="uisub.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="imesample.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="attach_dnf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="imesample.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="imesample.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="attach_dnf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="def_name.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\imesample.ICO">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>

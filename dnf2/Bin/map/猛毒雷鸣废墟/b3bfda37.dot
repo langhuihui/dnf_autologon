@@ -1,0 +1,29 @@
+digraph G {
+graph [bgcolor=white size="20,20"]
+node [shape=circle color=black]
+0[shape = polygon, sides = 4, label="710,52 [0]", pos = "0,2.25!" ];
+1[shape = polygon, sides = 4, label="728,52 [1]", pos = "2.25,2.25!" ];
+2[shape = polygon, sides = 4, label="728,70 [2]", pos = "2.25,0!" ];
+3[shape = polygon, sides = 4, label="746,70 [3]", pos = "4.5,0!" ];
+4[shape = polygon, sides = 4, label="764,70 [4]", pos = "6.75,0!" ];
+5[shape = polygon, sides = 4, label="764,52 [5]", pos = "6.75,2.25!" ];
+6[shape = polygon, sides = 4, label="782,52 [6]", pos = "9,2.25!" ];
+7[shape = polygon, sides = 4, label="782,70 [7]", pos = "9,0!" ];
+8[shape = polygon, sides = 4, label="746,52 [8]", pos = "4.5,2.25!" ];
+0->1 ;
+1->0 ;
+1->2 ;
+2->1 ;
+2->3 ;
+3->2 ;
+3->4 ;
+4->3 ;
+4->5 ;
+5->4 ;
+5->6 ;
+5->8 ;
+6->5 ;
+6->7 ;
+7->6 ;
+8->5 ;
+}

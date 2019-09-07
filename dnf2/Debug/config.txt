@@ -1,0 +1,5 @@
+D:\dnf\TCLS\Client.exe
+D:\vs2010\Projects\dnf2\Debug\dnf2.exe
+D:\vs2010\Projects\dnf2\Debug\dnf2_no_login.exe
+0-5 6-0
+¿í´øÁ¬½Ó abc 123

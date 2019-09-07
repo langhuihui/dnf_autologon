@@ -1,0 +1,91 @@
+;
+; ProctectDriver.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=Sample ; TODO: edit Class
+ClassGuid={78A1C341-4539-11d3-B88D-00C04FAD5171} ; TODO: edit ClassGuid
+Provider=%ManufacturerName%
+CatalogFile=ProctectDriver.cat
+DriverVer=09/24/2014,15.40.7.830
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=SampleClassReg
+
+[SampleClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+ProctectDriver.sys  = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTx86
+
+[Standard.NTx86]
+%ProctectDriver.DeviceDesc%=ProctectDriver_Device, Root\ProctectDriver ; TODO: edit hw-id
+
+[ProctectDriver_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+ProctectDriver.sys
+
+;-------------- Service installation
+[ProctectDriver_Device.NT.Services]
+AddService = ProctectDriver,%SPSVCINST_ASSOCSERVICE%, ProctectDriver_Service_Inst
+
+; -------------- ProctectDriver driver install sections
+[ProctectDriver_Service_Inst]
+DisplayName    = %ProctectDriver.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\ProctectDriver.sys
+LoadOrderGroup = Extended Base
+
+;
+;--- ProctectDriver_Device Coinstaller installation ------
+;
+
+[DestinationDirs]
+ProctectDriver_Device_CoInstaller_CopyFiles = 11
+
+[ProctectDriver_Device.NT.CoInstallers]
+AddReg=ProctectDriver_Device_CoInstaller_AddReg
+CopyFiles=ProctectDriver_Device_CoInstaller_CopyFiles
+
+[ProctectDriver_Device_CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller01011.dll,WdfCoInstaller"
+
+[ProctectDriver_Device_CoInstaller_CopyFiles]
+WdfCoInstaller01011.dll
+
+[SourceDisksFiles]
+WdfCoInstaller01011.dll=1 ; make sure the number matches with SourceDisksNames
+
+[ProctectDriver_Device.NT.Wdf]
+KmdfService =  ProctectDriver, ProctectDriver_wdfsect
+[ProctectDriver_wdfsect]
+KmdfLibraryVersion = 1.11
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="" ; TODO: add ManufacturerName
+ClassName="Samples" ; TODO: edit ClassName
+DiskName = "ProctectDriver Installation Disk"
+ProctectDriver.DeviceDesc = "ProctectDriver Device"
+ProctectDriver.SVCDESC = "ProctectDriver Service"

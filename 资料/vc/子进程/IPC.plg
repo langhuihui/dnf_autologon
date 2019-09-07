@@ -1,0 +1,27 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: IPC - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPC0.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/IPC.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\ksreg_delphi\V9\eg9.1\vc\вс╫ЬЁл\IPCDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPC0.tmp" 
+Creating command line "link.exe /nologo /subsystem:windows /incremental:yes /pdb:"Release/IPC.pdb" /debug /machine:I386 /out:"Release/IPC.exe" /pdbtype:sept  ".\Debug\IPC.obj" ".\Debug\IPCDlg.obj" ".\Debug\ksreglib.obj" ".\Debug\StdAfx.obj" ".\Debug\IPC.res" "
+<h3>Output Window</h3>
+Compiling...
+IPCDlg.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+IPC.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
